@@ -22,7 +22,7 @@ for time=1:time_number,
         s=size(X,2);
     
     else
-        s=1;
+        s=0
         
     end%end the isempty check for array
     
