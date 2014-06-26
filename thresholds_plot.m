@@ -25,12 +25,12 @@ title('Rok Injection Cell');
 
     wmean(x(2:size(x,1),:),counts(2:size(x,1),:))
 %%
-for i=1:time_number,
+for i=30:time_number,
     
-    [counts,x] = imhist(E(i).cell(12).g);
+    [counts,x] = imhist(E(i).cell(55).g);
     weigted_mean=wmean(x(2:size(x,1),:),counts(2:size(x,1),:));
      
-    V = var(x(2:size(x,1),:),counts(2:size(x,1),:)) 
+    V = var(x(2:size(x,1),:),counts(2:size(x,1),:)) ;
  %(2:size(x,1),:) this ignores mountain of zeros corresponding black
  %intensity at beginning
     
@@ -39,3 +39,10 @@ for i=1:time_number,
     hold on;
     
 end
+
+%%
+
+[counts,x] = imhist(E(43).cell(55).g);
+    weigted_mean=wmean(x(2:size(x,1),:),counts(2:size(x,1),:));
+     
+    V = var(x(2:size(x,1),:),counts(2:size(x,1),:)) ;
