@@ -1,13 +1,13 @@
-load('roki_image5_histogram_thresholds');
+load('water_image21_histogram_thresholds');
 %%
-imhist(E(2).cell(30).g)
+imhist(uint8(E(42).cell(3).ANS))
 xlim([0.001 1]);
 ylim([0 500]);
 
 %%
-for i=25:time_number,
+for i=1:time_number,
     
-    X=find(E(i).cell(30).structure(7).area >4);
+    X=find(E(i).cell(40).structure(7).area >4);
     s=size(X,2);
     scatter(i,s)
     hold on;
@@ -25,9 +25,9 @@ title('Rok Injection Cell');
 
     wmean(x(2:size(x,1),:),counts(2:size(x,1),:))
 %%
-for i=30:time_number,
+for i=1:time_number,
     
-    [counts,x] = imhist(E(i).cell(55).g);
+    [counts,x] = imhist(uint8(E(i).cell(40).ANS));
     weigted_mean=wmean(x(2:size(x,1),:),counts(2:size(x,1),:));
      
     V = var(x(2:size(x,1),:),counts(2:size(x,1),:)) ;
@@ -42,7 +42,7 @@ end
 
 %%
 
-[counts,x] = imhist(E(43).cell(55).g);
+[counts,x] = imhist(E(60).cell(10).g);
     weigted_mean=wmean(x(2:size(x,1),:),counts(2:size(x,1),:));
      
     V = var(x(2:size(x,1),:),counts(2:size(x,1),:)) ;
