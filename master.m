@@ -1,14 +1,14 @@
 
 clear all;
 
-res=0.13; % this is determined by the microscopes, it is 0.2125 if you have 0.2125 microns per pixel, 0.1417 for spn
+res=0.11; % this is determined by the microscopes, it is 0.2125 if you have 0.2125 microns per pixel, 0.1417 for spn
 
 
 %%Loading the data
-load('/Users/eesh/Desktop/video_analysis_data/water_injection/Image21_121813/Measurements/Membranes--vertices--Vertex-x.mat');
+load('/Users/eesh/Desktop/live_analysis_data/water_injection/Image5_121813/Measurements/Membranes--vertices--Vertex-x.mat');
 datax=data;
 cell_number=size(datax,3); %    W11 This just assigns 109 to the cel_number for the given file
-load('/Users/eesh/Desktop/video_analysis_data/water_injection/Image21_121813/Measurements/Membranes--vertices--Vertex-y.mat'); %this loads the y 
+load('/Users/eesh/Desktop/live_analysis_data/water_injection/Image5_121813/Measurements/Membranes--vertices--Vertex-y.mat'); %this loads the y 
 datay=data;
 
 
@@ -20,7 +20,7 @@ time_number=size(datay,1);
 
 for time=1:time_number,
 %%sprintf is awesome!
-image_path=strcat('/Users/eesh/Desktop/video_analysis_data/water_injection/Image21_121813/Myosin/Image21_121813_t',sprintf('%03d',time),'_z007_c001.tif')  ;  
+image_path=strcat('/Users/eesh/Desktop/live_analysis_data/water_injection/Image5_121813/Myosin/Image5_121813_t',sprintf('%03d',time),'_z006_c001.tif')  ;  
 A=imread(image_path); 
 A_hold=A;
 A=double(A);
@@ -111,9 +111,9 @@ end
 end
 
 %%
-load('roki_image5_histogram_thresholds');
+%load('roki_image5_histogram_thresholds');
 %%
-if 1
+if 0
     
 [counts,x]=imhist(E(40).cell(20).g);
 stem(x,counts);
@@ -136,7 +136,7 @@ end
 %%results for wildtype they are
 %%VERY ENCOURAGING
 
-E(60).cell(5).structure(10).area
+%E(60).cell(5).structure(10).area
 
 %imshow(uint8(E(42).cell(3).ANS))
 %%http://www.johnloomis.org/ece563/notes/BinaryImages/coins/coins.html

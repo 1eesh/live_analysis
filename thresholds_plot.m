@@ -1,5 +1,5 @@
 clear all;
-load('water_image21_histogram_thresholds');
+load('water_image5_histogram_thresholds');
 %%
 imhist(uint8(E(42).cell(3).ANS))
 xlim([0.001 1]);
@@ -20,9 +20,9 @@ for cell_index=1:cell_number,
     s_prev=10; %%this is a construct for error checking when EDGE fails to track, I just add the number in the last tracked cell
 for time=1:time_number,
     
-    if(~isempty(E(time).cell(cell_index).g))
+    if(and(~isempty(E(time).cell(cell_index).g), (sum(sum(uint8(E(time).cell(cell_index).ANS),1),2))~=0 ) )
    
-        X=find(E(time).cell(cell_index).structure(7).area >4);
+        X=find(E(time).cell(cell_index).structure(8).area >4);
         s=size(X,2);
         s_prev=s;
     
@@ -45,7 +45,7 @@ allcells_no=[ allcells_no ; cell_no];
     
 end
 
-    scatter(1:1:time_number,floor(mean(allcells_no)))
+    scatter(1:1:time_number,(mean(allcells_no)))
 
 
 xlabel('Time Step');
