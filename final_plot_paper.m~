@@ -52,12 +52,9 @@ allcells_no_5=allcells_no;
 time_number_5=time_number;
 allcells_no_5_final=interp1(1:8.3:(60-31)*8.3,mean(allcells_no_5(:,32:60)),1:1:240);
 
-scatter(1:1:time_number_5,mean(allcells_no_5))
-xlabel('Time(seconds)');
-ylabel('Number of Discrete Structures');
-title('Rok Inhibitor Injections(Individual Embryo)');
-hx_1 = graph2d.constantline(30, 'Color',[1 0 0]);
-changedependvar(hx_1,'x');
+scatter(32:1:time_number_5,mean(allcells_no_5(:,32:size(allcells_no_5,2))))
+
+
 
 
 

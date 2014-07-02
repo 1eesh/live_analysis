@@ -1,3 +1,5 @@
+%%THRESHOLD 7 and area smallest 4sqpixels
+
 video_analysis
 ==============
 
@@ -31,6 +33,8 @@ xy = 0.13
 t = 8.4
 edged membrane = z005
 injected frame 5
+BEST threshold behaviour 
+
 
 Image5_011113
 xy = 0.13

@@ -20,7 +20,7 @@ for cell_index=1:cell_number,
     s_prev=10; %%this is a construct for error checking when EDGE fails to track, I just add the number in the last tracked cell
 for time=1:time_number,
     
-    if(and(~isempty(E(time).cell(cell_index).g), (sum(sum(uint8(E(time).cell(cell_index).ANS),1),2))~=0 ) )
+    if(~isnan(datax{time,1,cell_index}) ) 
    
         X=find(E(time).cell(cell_index).structure(7).area >4);
         s=size(X,2);
@@ -45,7 +45,7 @@ allcells_no=[ allcells_no ; cell_no];
     
 end
 
-    scatter(1:1:time_number,(mean(allcells_no)))
+    scatter(3:1:time_number,(mean(allcells_no(:,3:size(allcells_no,2)))))
 
 
 xlabel('Time Step');
@@ -55,7 +55,7 @@ title('Rok Inhibitor Injections');
 
 
 
-save('water_image5_histogram_thresholds_plotting_variables.mat','allcells_no','time_number');
+%save('roki_image5_histogram_thresholds_plotting_variables.mat','allcells_no','time_number');
 
 
 

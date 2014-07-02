@@ -1,14 +1,14 @@
 
 clear all;
 
-res=0.13; % this is determined by the microscopes, it is 0.2125 if you have 0.2125 microns per pixel, 0.1417 for spn
+res=0.12; % this is determined by the microscopes, it is 0.2125 if you have 0.2125 microns per pixel, 0.1417 for spn
 
 
 %%Loading the data
-load('/Users/eesh/Desktop/live_analysis_data/roki_injection/Image1_011113/Measurements/Membranes--vertices--Vertex-x.mat');
+load('/Users/eesh/Desktop/live_analysis_data/roki_injection/Image7_121113/Measurements/Membranes--vertices--Vertex-x.mat');
 datax=data;
 cell_number=size(datax,3); %    W11 This just assigns 109 to the cel_number for the given file
-load('/Users/eesh/Desktop/live_analysis_data/roki_injection/Image1_011113/Measurements/Membranes--vertices--Vertex-y.mat'); %this loads the y 
+load('/Users/eesh/Desktop/live_analysis_data/roki_injection/Image7_121113/Measurements/Membranes--vertices--Vertex-y.mat'); %this loads the y 
 datay=data;
 
 
@@ -20,7 +20,7 @@ time_number=size(datay,1);
 
 for time=1:time_number,
 %%sprintf is awesome!
-image_path=strcat('/Users/eesh/Desktop/live_analysis_data/roki_injection/Image1_011113/Myosin/Image1_011113_t',sprintf('%03d',time),'_z005_c001.tif')  ;  
+image_path=strcat('/Users/eesh/Desktop/live_analysis_data/roki_injection/Image7_121113/Myosin/Image7_121113_t',sprintf('%03d',time),'_z007_c001.tif')  ;  
 A=imread(image_path); 
 A_hold=A;
 A=double(A);
@@ -30,11 +30,11 @@ A=double(A);
 for cell_index=1:cell_number, 
   
     %%if for NAN check
-  if(~isnan(datax{time,1,cell_index})) 
+  if(~isnan(datax{time,2,cell_index})) 
           
-     tx = datax{time,1,cell_index}'./res;
+     tx = datax{time,2,cell_index}'./res;
 
-    ty = datay{time,1,cell_index}'./res;
+    ty = datay{time,2,cell_index}'./res;
 
      vert_cell=size(tx,2);
    t_poly=zeros(vert_cell,2);
@@ -131,7 +131,7 @@ end
 
 
 
-%% you must save E using save -v7.3 blahblah
+%% you must save E using save -v7.3 roki_image1_histogram_thresholds
 %%show E(time).cell(10).structure(12).area E(40).cell(30).structure(12).area
 %%results for wildtype they are
 %%VERY ENCOURAGING
