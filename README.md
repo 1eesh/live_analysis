@@ -41,6 +41,9 @@ xy = 0.13
 t = 8.3
 edged membrane = z008
 injected frame 30
+cell_index=6; for threshold output
+
+
 
 Image7_121311
 xy = 0.12
