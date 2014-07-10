@@ -25,7 +25,7 @@ for time=1:time_number,
         X=find(E(time).cell(cell_index).structure(7).area >4);
         
         s=size(X,2);
-        s_prev=s;   
+        s_prev=s;
     
     else
         s=s_prev;
@@ -47,7 +47,7 @@ allcells_no=[ allcells_no ; cell_no];
 end
 
     scatter(3:1:time_number,(mean(allcells_no(:,3:size(allcells_no,2)))))
-    %%3 represents injection time point
+
 
 xlabel('Time Step');
 ylabel('Number of Discrete Structures');

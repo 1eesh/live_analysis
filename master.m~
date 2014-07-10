@@ -137,15 +137,35 @@ for time=1:time_number,
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%I will explain the logic behind this section of the code with a multiline
+%if 0 style comments at the end of this section.
+%Number of Discrete Unconnected Structures shall be refered to as N or
+%N(threshold,time)
+
+
     %%%%%%%%%%%%%%%%%%%THRESHOLD LOOP%%%%%%%%%%%%%%%%%%%%%%%%%
     %I will now explain what each variable here means:
     
-    %threshold_fn
+    %threshold_fn : NOT NEEDED FOR finding N, ignore.
+    %threshold : The threshold applied(percentage, 0.05 means 5%
+    %g : The original unthresholded image matrix, values between 0 and 1
+    %into_bw : The image matrix after applying the threshold
+    %num : The number of discrete structures in the cell(without ANY size filters)
+    %area : contains the area of each discrete structure, used in size filter
+    
+    %L : The individual structures expressed in the matrix(only useful for displaying cells in different colors, NOT important for the calculations
+    
+    %E(time).cell(cell_index).structure(integer threshold applied) is a
+    %struct array 
+    
+    %bwlabel : FUNCTION that differentiates different UNCONNECTED DISCRETE STRUCTURES IN THE CELL
     
 
-       threshold_fn=[];     %% Initializing this variable to zero     
+       threshold_fn=[];     %% Initializing this variable to zero, we don't need this variable to find N     
        
-       for threshold=0.05:0.05:1,
+       
+       
+       for threshold=0.05:0.05:1,   
 
                into_bw = im2bw(g, threshold);
                [L,num] = bwlabel(into_bw);
@@ -153,8 +173,13 @@ for time=1:time_number,
                 %%20 is multiplied only because we need to have the indices as
                 %%integers(but the size of the array which is 20 does not change
                 E(time).cell(cell_index).structure(uint8(20*threshold)).num=num;    
-                %(time).cell(cell_index).structure(uint8(20*threshold)).L=L;    
+                
+                
+                if uint8(20*threshold)==7,
+                    
+                    E(time).cell(cell_index).structure(uint8(20*threshold)).L=L;    
 
+                end    
                 %%finding the area of each of these structures
 
                 for w=1:num
@@ -166,10 +191,48 @@ for time=1:time_number,
        
        %If you face difficulty understanding this section please refer to:
        % http://www.johnloomis.org/ece563/notes/BinaryImages/coins/coins.html
-
+       
+    %End of code
     %%%%%%%%%%%%%%%%%%%THRESHOLD LOOP%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    
+    
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+%MULTILINE COMMENTS: wordy explanations for this section(if 0 means
+%comments, no part of this is executed.
+    
+
+%{
+
+Number of Discrete Unconnected Structures in a cell is a function of time and threshold applied. 
+N(threshold,time)
+(the lower case names like threshold and time are variables)
+(the upper case names like TIME_INJECTION are constants)
+
+
+
+
+As our objective is to study the behaviour of the system over time; we must arrive fix the threshold variable. This slide describes how I have arrived at the threshold that I will be using to study the behaviour of N over time. (and, in any case, there is a range of thresholds for which the behaviour of  N does not change significantly)
+
+I plotted the number of discrete structures as a function of threshold applied at the time point of injection(N(thesholds,TIME_INJECTION) of Rok Inhibitor for the embryos. (Show the plots for a couple of videos for water and rok inhibitor injections). 
+
+The thresholds applied are a percentage of maximum intensity for individual cells. (a 90% threshold means that we are restricting our attention to the cells that have an intensity which is no less than 90% of the maximum intensity found in that particular cell at that particular point in time.
+
+I am trying to be as conservative as I can be while estimating the number of discrete unconnected rok structures. So the threshold that I use is the point of maxima of the function of no. of discrete unconnected structures as a function of time. The reasoning is that if we take the maximum possible number of unconnected number of structures for a particular threshold and we still see an increase in the number of structures at subsequent points in time, our argument seems stronger.
+    
+
+
+
+area(size filter) : again being conservative here, the typical size of the structuresthat we identify js at least in the 20sq.pixel range i am ignoring thestructures that are 4 sq. pixels large (2pixel by 2pixel). Note: what I amsaying while doing this is that any UNCONNECTED component that is so tinyis ignored(the unconnected components start appearing after theinjection(they actually make the graphs look better, with steeper slopes;but i am ignoring them as noise only to make my the analysis unbiased andconservative.
+
+
+%}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -189,7 +252,17 @@ end     %END OF LOOP OVER TIME
 
 
 
-%% NOW THE STRUCTURE VARIABLE E contains everything we need.
+%% NOW THE STRUCTURE VARIABLE E contains everything we need and we 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%You can uncomment the following line to save the workspace
+%YOU NEED TO save it as v7.3 file
+
+save -v7.3 roki_image5_histogram_thresholds_display
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -201,13 +274,19 @@ end     %END OF LOOP OVER TIME
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%{
+You can basically ignore the following code, it is commented anyway. These
+are just testing functions that I used while debugging, They do not affect
+the output or computations in any way.
 
-
+%}
 
 
 if 0
 %%
-%load('roki_image5_histogram_thresholds');
+%load('roki_image5_histogram_thresholds_display');
 %%
 if 0
     
@@ -228,12 +307,12 @@ end
 
 
 %%
-load('roki_image5_histogram_thresholds.mat');
+%load('roki_image5_histogram_thresholds.mat');
 %%
-cell_index=6;
-t=45;
+cell_index=2;
+
 %%
-for t=30:60,
+for t=1:60,
 
 discrete = im2uint8(E(t).cell(cell_index).structure(7).L/E(t).cell(cell_index).structure(7).num);
 
@@ -241,9 +320,12 @@ continuous = uint8(E(t).cell(cell_index).ANS);
 
 M=[discrete continuous];
 
-imshow(M);
+imagesc(M,'colormap','gray');
 
-imwrite(M,jet,strcat('cell',num2str(cell_index),'_time',num2str(t),'.tif'));
+%imwrite(M,strcat('cell',num2str(cell_index),'_time',num2str(t),'.tif'));
+%jet, hot,
+
+imwrite(M,hot,strcat('cell_color_',num2str(cell_index),'_time',num2str(t),'.tif'));
 
 end
 %%

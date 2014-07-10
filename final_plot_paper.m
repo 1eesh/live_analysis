@@ -1,5 +1,5 @@
 %% PLOT FOR WATER INJECTION
-clear 
+clear all;
 
 
 
@@ -30,8 +30,12 @@ xlabel('Time(seconds)');
 ylabel('Number of Discrete Structures');
 title('Water Injections');
 
+
+
+
+
 %% PLOT FOR ROK INJECTIONS
-clear 
+clear all;
 
 load('roki_image1_histogram_thresholds_plotting_variables.mat','allcells_no','time_number');
 allcells_no_1=allcells_no;
